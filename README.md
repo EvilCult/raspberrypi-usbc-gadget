@@ -50,7 +50,7 @@ sudo modprobe libcomposite
 cd /usr/local/bin/
 sudo nano usb_gadget.sh
 ```
-##### Copy the contents of the project's ***usb_gadget.sh*** file into this new file, and save it.
+##### Copy the contents of the project's [***usb_gadget.sh***](https://github.com/EvilCult/raspberrypi-usbc-gadget/blob/main/usb_gadget.sh) file into this new file, and save it.
 
 ##### Add execution permissions to the script:
 ```bash
@@ -64,7 +64,7 @@ sudo chmod +x /usr/local/bin/usb_gadget.sh
 cd /etc/systemd/system/
 sudo nano usb-gadget.service
 ```
-##### Copy the contents of the project's ***usb-gadget.service*** file into this new file, and save it.
+##### Copy the contents of the project's [***usb-gadget.service***](https://github.com/EvilCult/raspberrypi-usbc-gadget/blob/main/usb-gadget.service) file into this new file, and save it.
 
 ##### Load the new service unit, enable it to start on boot, and start it immediately:
 ```bash
@@ -80,9 +80,12 @@ sudo systemctl start usb-gadget.service
 cd /etc/dnsmasq.d/
 sudo nano usb0.conf
 ```
-##### Copy the contents of the project's ***usb0.conf*** file into this new file, and save it.
+##### Copy the contents of the project's [***usb0.conf***](https://github.com/EvilCult/raspberrypi-usbc-gadget/blob/main/usb0.conf) file into this new file, and save it.
 
 ##### Restart the dnsmasq service to apply the new configuration:
 ```bash
 sudo systemctl restart dnsmasq
 ```
+
+### DONE!
+##### Power down your Raspberry Pi, then connect it via USB-C to your computer or iPad. A new Ethernet interface named 'PI USB Ethernet' will appear on the host device. You can then access your Raspberry Pi via SSH at 10.10.0.1 (*if you don't change anything in the default configuration*).
