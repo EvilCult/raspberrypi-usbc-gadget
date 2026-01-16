@@ -87,5 +87,10 @@ sudo vim usb0.conf
 sudo systemctl restart dnsmasq
 ```
 
-### DONE!
 ##### Power down your Raspberry Pi, then connect it via USB-C to your computer or iPad. A new Ethernet interface named 'PI USB Ethernet' will appear on the host device. You can then access your Raspberry Pi via SSH at 10.10.0.1 (*if you don't change anything in the default configuration*).
+
+### DONE!
+
+#### Enjoying this project? > You can download the complete package and support my work on [Gumroad](https://evilcult.gumroad.com/l/ourvz). While it's available for free ($0), any donation you feel like giving is a huge motivation for me to keep improving this tool.
+
+💖 [Donate / Get it on Gumroad](https://evilcult.gumroad.com/l/ourvz)
