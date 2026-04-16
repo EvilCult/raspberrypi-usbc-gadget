@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 set -e
 
+# Check root privileges
+if [ "$(id -u)" -ne 0 ]; then
+    echo "Error: This script must be run as root (use: sudo bash setup.sh)" >&2
+    exit 1
+fi
+
 echo "[1] Install dnsmasq..."
 apt update -y
 apt install -y dnsmasq
@@ -22,17 +28,20 @@ grep -qxF "libcomposite" "$MODULES" || echo "libcomposite" >> "$MODULES"
 echo "[4] Create usb_gadget.sh..."
 mkdir -p /usr/local/bin
 curl -sSL https://github.com/EvilCult/raspberrypi-usbc-gadget/raw/refs/heads/main/usb_gadget.sh -o /usr/local/bin/usb_gadget.sh
+[ -s /usr/local/bin/usb_gadget.sh ] || { echo "Error: Failed to download usb_gadget.sh"; exit 1; }
 chmod +x /usr/local/bin/usb_gadget.sh
 
 echo "[5] Create systemd service..."
 curl -sSL https://github.com/EvilCult/raspberrypi-usbc-gadget/raw/refs/heads/main/usb-gadget.service -o /etc/systemd/system/usb-gadget.service
+[ -s /etc/systemd/system/usb-gadget.service ] || { echo "Error: Failed to download usb-gadget.service"; exit 1; }
 systemctl daemon-reload
 systemctl enable usb-gadget.service
-systemctl restart usb-gadget.service
+systemctl start usb-gadget.service
 
 echo "[6] Configure dnsmasq (usb0.conf)..."
 mkdir -p /etc/dnsmasq.d
 curl -sSL https://github.com/EvilCult/raspberrypi-usbc-gadget/raw/refs/heads/main/usb0.conf -o /etc/dnsmasq.d/usb0.conf
+[ -s /etc/dnsmasq.d/usb0.conf ] || { echo "Error: Failed to download usb0.conf"; exit 1; }
 systemctl restart dnsmasq
 
 echo "Done! Please reboot!"

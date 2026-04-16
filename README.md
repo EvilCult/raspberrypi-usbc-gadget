@@ -7,6 +7,9 @@
 ## 🚀Quick Start
 ---
 
+> **Automated Setup**: Run `sudo bash setup.sh` to automatically complete all the steps below.
+
+
 ### 1. Install dnsmasq
 ##### Run the following commands to update the package list and install dnsmasq:
 ```bash
