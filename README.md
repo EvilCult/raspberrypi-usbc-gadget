@@ -10,6 +10,21 @@
 > **Automated Setup**: Run `sudo bash setup.sh` to automatically complete all the steps below.
 
 
+### 0. Disable systemd-resolved DNS Stub Listener (Ubuntu 24.04)
+##### On Ubuntu 24.04, systemd-resolved occupies port 53 by default, which conflicts with dnsmasq. Disable it:
+```bash
+sudo vim /etc/systemd/resolved.conf
+```
+##### Set or add the following line:
+```
+DNSStubListener=no
+```
+##### Restart the service:
+```bash
+sudo systemctl restart systemd-resolved
+```
+
+
 ### 1. Install dnsmasq
 ##### Run the following commands to update the package list and install dnsmasq:
 ```bash

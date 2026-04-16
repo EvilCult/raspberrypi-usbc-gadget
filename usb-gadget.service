@@ -5,6 +5,11 @@ After=network.target
 [Service]
 Type=oneshot
 ExecStart=/usr/local/bin/usb_gadget.sh
+ExecStop=/bin/bash -c '\
+  echo "" > /sys/kernel/config/usb_gadget/g1/UDC 2>/dev/null; \
+  ip addr flush dev usb0 2>/dev/null; \
+  iptables -t nat -D POSTROUTING -o wlan0 -j MASQUERADE 2>/dev/null; \
+  sysctl -q -w net.ipv4.ip_forward=0'
 RemainAfterExit=yes
 
 [Install]

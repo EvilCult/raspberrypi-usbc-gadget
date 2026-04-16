@@ -7,6 +7,22 @@ if [ "$(id -u)" -ne 0 ]; then
     exit 1
 fi
 
+echo "[0] Disable systemd-resolved DNS stub listener..."
+if systemctl is-active --quiet systemd-resolved; then
+    if ! grep -q "^DNSStubListener=no" /etc/systemd/resolved.conf; then
+        sed -i 's/^#\?DNSStubListener=.*/DNSStubListener=no/' /etc/systemd/resolved.conf
+        # If the line doesn't exist, append it
+        grep -q "^DNSStubListener=no" /etc/systemd/resolved.conf || \
+            echo "DNSStubListener=no" >> /etc/systemd/resolved.conf
+        systemctl restart systemd-resolved
+        echo "Disabled DNS stub listener"
+    else
+        echo "Already disabled, skipping"
+    fi
+else
+    echo "systemd-resolved not active, skipping"
+fi
+
 echo "[1] Install dnsmasq..."
 apt update -y
 apt install -y dnsmasq
